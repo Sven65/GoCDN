@@ -69,6 +69,12 @@ func main(){
 
 	flag.Parse() // Parse the flags
 
+
+	// Remove if using nginx or something else
+	http.HandleFunc("/f/", func(w http.ResponseWriter, r *http.Request) {
+	    http.ServeFile(w, r, r.URL.Path[1:])
+	})
+
 	http.HandleFunc("/", upload)
 	http.HandleFunc("/ul", upload)
 	fmt.Printf("Listening on port %d", *port) // Print serving
